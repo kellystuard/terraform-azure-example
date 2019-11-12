@@ -13,8 +13,3 @@ resource "azurerm_lb" "test" {
   location            = "West US"
   resource_group_name = "${azurerm_resource_group.main.name}"
 }
-resource "azurerm_lb" "test2" {
-  name                = "AnotherLoadBalancer"
-  location            = "West US"
-  resource_group_name = "${azurerm_resource_group.main.name}"
-}
