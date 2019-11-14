@@ -64,7 +64,6 @@ resource "azurerm_virtual_machine" "app1" {
   }
   tags = {
     environment = "example"
-    windows = "false"
-    linux = "true"
+    os_type = "linux"
   }
 }
