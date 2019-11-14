@@ -21,8 +21,8 @@ resource "azurerm_subnet" "internal" {
 }
 module "standard_vm" {
   source              = "./standard_vm"
-  name                = "app1"
-  location            = var.location
-  resource_group_name = azurerm_resource_group.main.name
-  subnet_id           = azurerm_subnet.internal.id
+  #name                = "app1"
+  #location            = var.location
+  #resource_group_name = azurerm_resource_group.main.name
+  #subnet_id           = azurerm_subnet.internal.id
 }
