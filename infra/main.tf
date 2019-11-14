@@ -20,7 +20,7 @@ resource "azurerm_subnet" "internal" {
   address_prefix       = "10.0.2.0/24"
 }
 module "standard_vm" {
-  source              = "./modules/standard_vm"
+  source              = "./standard_vm"
   name                = "app1"
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
