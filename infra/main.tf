@@ -19,3 +19,9 @@ resource "azurerm_subnet" "internal" {
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefix       = "10.0.2.0/24"
 }
+resource "standard_vm" "app1" {
+  name                = "app1"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.main.name
+  subnet_id           = azurerm_subnet.internal.id
+}
