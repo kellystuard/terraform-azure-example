@@ -19,31 +19,20 @@ resource "azurerm_subnet" "internal" {
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefix       = "10.0.2.0/24"
 }
-module "app1" {
-  source              = "./standard_vm"
-  name                = "app1"
-  resource_group_name = azurerm_resource_group.main.name
-  location            = azurerm_resource_group.main.location
-  subnet_id           = azurerm_subnet.internal.id
-}
-module "app2" {
-  source              = "./standard_vm"
-  name                = "app2"
-  resource_group_name = azurerm_resource_group.main.name
-  location            = azurerm_resource_group.main.location
-  subnet_id           = azurerm_subnet.internal.id
-}
-module "app3" {
-  source              = "./standard_vm"
-  name                = "app3"
-  resource_group_name = azurerm_resource_group.main.name
-  location            = azurerm_resource_group.main.location
-  subnet_id           = azurerm_subnet.internal.id
-}
-module "app4" {
-  source              = "./standard_vm"
-  name                = "app4"
-  resource_group_name = azurerm_resource_group.main.name
-  location            = azurerm_resource_group.main.location
-  subnet_id           = azurerm_subnet.internal.id
-}
+
+# Uncomment these to show spinning up two module instances
+#module "app1" {
+#  source              = "./standard_vm"
+#  name                = "app1"
+#  resource_group_name = azurerm_resource_group.main.name
+#  location            = azurerm_resource_group.main.location
+#  subnet_id           = azurerm_subnet.internal.id
+#}
+#module "app2" {
+#  source              = "./standard_vm"
+#  name                = "app2"
+#  resource_group_name = azurerm_resource_group.main.name
+#  location            = azurerm_resource_group.main.location
+#  subnet_id           = azurerm_subnet.internal.id
+#}
+ 
