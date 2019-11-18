@@ -37,9 +37,9 @@ resource "azurerm_subnet" "internal" {
 #}
 
 # This resource should fail, due to policy
-resource "azurerm_public_ip" "denied" {
-  name                = "DeniedPublicIp"
-  location            = "West US"
-  resource_group_name = azurerm_resource_group.main.name
-  allocation_method   = "Static"
-}
+#resource "azurerm_public_ip" "denied" {
+#  name                = "DeniedPublicIp"
+#  location            = "West US"
+#  resource_group_name = azurerm_resource_group.main.name
+#  allocation_method   = "Static"
+#}
