@@ -1,5 +1,16 @@
 resource "random_password" "password" {
-  length = 120
+  # The supplied password must be between 6-72 characters long
+  # and must satisfy at least 3 of password complexity requirements from the following:
+  # 1) Contains an uppercase character
+  # 2) Contains a lowercase character
+  # 3) Contains a numeric digit
+  # 4) Contains a special character
+  # 5) Control characters are not allowed
+  length      = 120
+  min_upper   = 1
+  min_lower   = 1
+  min_numeric = 1
+  min_special = 1
 }
 resource "azurerm_network_interface" "app1" {
   name                = "app1-nic"
