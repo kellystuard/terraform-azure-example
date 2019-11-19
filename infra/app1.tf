@@ -6,7 +6,7 @@ resource "random_password" "password" {
   # 3) Contains a numeric digit
   # 4) Contains a special character
   # 5) Control characters are not allowed
-  length      = 120
+  length      = 70
   min_upper   = 1
   min_lower   = 1
   min_numeric = 1
