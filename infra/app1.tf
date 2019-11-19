@@ -39,7 +39,7 @@ resource "azurerm_virtual_machine" "app1" {
   os_profile {
     computer_name  = "app1"
     admin_username = "azureadmin"
-    admin_password = random_password.password
+    admin_password = random_password.password.result
   }
   os_profile_linux_config {
     disable_password_authentication = false
