@@ -28,7 +28,7 @@ resource "azurerm_virtual_machine" "app1" {
   location              = azurerm_resource_group.main.location
   resource_group_name   = azurerm_resource_group.main.name
   network_interface_ids = [azurerm_network_interface.app1.id]
-  vm_size               = "Standard_DS1_v2"
+  vm_size               = "Standard_B1ls"
 
   # delete the OS disk automatically when deleting the VM
   delete_os_disk_on_termination = true
