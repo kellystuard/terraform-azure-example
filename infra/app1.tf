@@ -1,10 +1,13 @@
+resource "random_password" "password" {
+  length = 120
+}
 resource "azurerm_network_interface" "app1" {
   name                = "app1-nic"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
   ip_configuration {
-    name                          = "app1configuration"
+    name                          = "app1-configuration"
     subnet_id                     = azurerm_subnet.internal.id
     private_ip_address_allocation = "Dynamic"
   }
@@ -34,9 +37,9 @@ resource "azurerm_virtual_machine" "app1" {
     managed_disk_type = "Standard_LRS"
   }
   os_profile {
-    computer_name  = "hostname"
-    admin_username = "testadmin"
-    admin_password = "Password1234!"
+    computer_name  = "app1"
+    admin_username = "azureadmin"
+    admin_password = random_password.password
   }
   os_profile_linux_config {
     disable_password_authentication = false
