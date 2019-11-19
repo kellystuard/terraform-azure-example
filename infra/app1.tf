@@ -55,7 +55,7 @@ resource "azurerm_virtual_machine" "app1" {
   os_profile_linux_config {
     disable_password_authentication = false
   }
-  tags {
+  tags = {
     environment = "example"
     os_type = "linux"
   }
