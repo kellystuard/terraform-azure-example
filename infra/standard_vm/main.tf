@@ -13,18 +13,18 @@ resource "random_password" "password" {
   min_special = 1
 }
 resource "azurerm_network_interface" "app" {
-  name                = "standard-vm-${var.name}-nic"
+  name                = "vm-${var.name}-nic"
   location            = var.location
   resource_group_name = var.resource_group_name
 
   ip_configuration {
-    name                          = "standard-vm-${var.name}-configuration"
+    name                          = "vm-${var.name}-configuration"
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Dynamic"
   }
 }
 resource "azurerm_virtual_machine" "app" {
-  name                  = "standard-vm-${var.name}-vm"
+  name                  = "vm-${var.name}-vm"
   location              = var.location
   resource_group_name   = var.resource_group_name
   network_interface_ids = [azurerm_network_interface.app.id]
@@ -42,7 +42,7 @@ resource "azurerm_virtual_machine" "app" {
     version   = "latest"
   }
   storage_os_disk {
-    name              = "standard-vm-${var.name}-disk1"
+    name              = "vm-${var.name}-disk1"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
