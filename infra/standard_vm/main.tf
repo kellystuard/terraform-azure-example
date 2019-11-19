@@ -1,3 +1,17 @@
+resource "random_password" "password" {
+  # The supplied password must be between 6-72 characters long
+  # and must satisfy at least 3 of password complexity requirements from the following:
+  # 1) Contains an uppercase character
+  # 2) Contains a lowercase character
+  # 3) Contains a numeric digit
+  # 4) Contains a special character
+  # 5) Control characters are not allowed
+  length      = 70
+  min_upper   = 1
+  min_lower   = 1
+  min_numeric = 1
+  min_special = 1
+}
 resource "azurerm_network_interface" "app" {
   name                = "standard-vm-${var.name}-nic"
   location            = var.location
@@ -9,7 +23,7 @@ resource "azurerm_network_interface" "app" {
     private_ip_address_allocation = "Dynamic"
   }
 }
-resource "azurerm_virtual_machine" "app1" {
+resource "azurerm_virtual_machine" "app" {
   name                  = "standard-vm-${var.name}-vm"
   location              = var.location
   resource_group_name   = var.resource_group_name
@@ -34,14 +48,14 @@ resource "azurerm_virtual_machine" "app1" {
     managed_disk_type = "Standard_LRS"
   }
   os_profile {
-    computer_name  = "hostname"
-    admin_username = "testadmin"
-    admin_password = "Password1234!"
+    computer_name  = "${var.name}"
+    admin_username = "azureadmin"
+    admin_password = random_password.password.result
   }
   os_profile_linux_config {
     disable_password_authentication = false
   }
-  tags = {
+  tags {
     environment = "example"
     os_type = "linux"
   }
