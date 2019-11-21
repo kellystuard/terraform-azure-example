@@ -1,13 +1,22 @@
 import "strings"
 import "tfplan"
 
-# RDP = 3389
-main = rule {
-  not any tfplan.resources.azurerm_network_security_rule as _, rule {
+anyRDP = func(rules) {
+  not any rules as _, rule {
+    strings.to_upper(rule.access) is "ALLOW" and
     not any append(rule.destination_port_ranges, instance.destination_port_range) as _, range {
       split = strings.split(range, "-")
       split contains "*" or
-        (split[0] <= 3389 and split[1] >= 3389)
+      split contains 3899 or
+      (split[0] < 3389 and split[1] > 3389)
     }
+  }
+}
+
+# RDP = 3389
+main = rule {
+  not anyRDP(tfplan.resources.azurerm_network_security_rule) and
+  not any tfplan.resources.azurerm_network_security_group as _, group {
+    not anyRDP(group.security_rule)
   }
 }

@@ -19,6 +19,27 @@ resource "azurerm_subnet" "internal" {
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefix       = "10.0.2.0/24"
 }
+resource "azurerm_network_security_group" "internal" {
+  name                = "InternalSecurityGroup"
+  location            = "${azurerm_resource_group.main.location}"
+  resource_group_name = "${azurerm_resource_group.main.name}"
+
+  security_rule {
+    name                       = "testRDP"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "3899"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+}
+resource "azurerm_subnet_network_security_group_association" "internal" {
+  subnet_id                 = "${azurerm_subnet.internal.id}"
+  network_security_group_id = "${azurerm_network_security_group.internal.id}"
+}
 
 # Uncomment these to show spinning up two module instances
 # module "app1" {
