@@ -57,7 +57,7 @@ resource "azurerm_subnet_network_security_group_association" "internal" {
 #  subnet_id           = azurerm_subnet.internal.id
 # }
 
- This resource should fail, due to policy
+# This resource should fail, due to policy
 resource "azurerm_public_ip" "denied" {
   name                = "DeniedPublicIp"
   location            = azurerm_resource_group.main.location
