@@ -3,10 +3,10 @@ import "tfplan"
 
 anyRDP = func(rules) {
   return not any rules as _, security_rule {
-    strings.to_upper(security_rule.access) is "ALLOW" and
+    return strings.to_upper(security_rule.access) is "ALLOW" and
     not any append(security_rule.destination_port_ranges, instance.destination_port_range) as _, range {
       split = strings.split(range, "-")
-      split contains "*" or
+      return split contains "*" or
       split contains 3899 or
       (split[0] < 3389 and split[1] > 3389)
     }
