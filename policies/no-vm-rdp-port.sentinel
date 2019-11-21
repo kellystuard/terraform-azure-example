@@ -1,0 +1,13 @@
+import "strings"
+import "tfplan"
+
+# RDP = 3389
+main = rule {
+  not any tfplan.resources.azurerm_network_security_rule as _, rule {
+    not any append(rule.destination_port_ranges, instance.destination_port_range) as _, range {
+      split = strings.split(range, "-")
+      split contains "*" or
+        (split[0] <= 3389 and split[1] >= 3389)
+    }
+  }
+}
