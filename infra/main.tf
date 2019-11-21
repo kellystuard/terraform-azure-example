@@ -18,7 +18,6 @@ resource "azurerm_subnet" "internal" {
   resource_group_name       = azurerm_resource_group.main.name
   virtual_network_name      = azurerm_virtual_network.main.name
   address_prefix            = "10.0.2.0/24"
-  network_security_group_id = "${azurerm_network_security_group.internal.id}"
 }
 resource "azurerm_network_security_group" "internal" {
   name                = "InternalSecurityGroup"
@@ -32,7 +31,7 @@ resource "azurerm_network_security_group" "internal" {
     access                     = "Deny"
     protocol                   = "Tcp"
     source_port_range          = "*"
-    destination_port_range     = "3899"
+    destination_port_range     = "*"
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }

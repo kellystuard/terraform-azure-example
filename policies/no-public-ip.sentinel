@@ -1,5 +1,5 @@
 import "tfplan"
 
 main = rule {
-    length(tfplan.resources.azurerm_public_ip) is 0
+    length(tfplan.resources.azurerm_public_ip else []) is 0
 }
