@@ -31,7 +31,7 @@ resource "azurerm_network_security_group" "internal" {
     access                     = "Deny"
     protocol                   = "Tcp"
     source_port_range          = "*"
-    destination_port_range     = "3899"
+    destination_port_range     = "*"
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
@@ -58,9 +58,9 @@ resource "azurerm_subnet_network_security_group_association" "internal" {
 # }
 
 # This resource should fail, due to policy
-resource "azurerm_public_ip" "denied" {
-  name                = "DeniedPublicIp"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-  allocation_method   = "Static"
-}
+#resource "azurerm_public_ip" "denied" {
+#  name                = "DeniedPublicIp"
+#  location            = azurerm_resource_group.main.location
+#  resource_group_name = azurerm_resource_group.main.name
+#  allocation_method   = "Static"
+#}
