@@ -2,9 +2,13 @@ import "strings"
 import "tfplan"
 
 anyRDP = func(rules) {
-  return not any rules as _, security_rule {
-    strings.to_upper(security_rule.access) is "ALLOW" and
-    not any append(security_rule.destination_port_ranges, instance.destination_port_range) as _, range {
+  return undefined
+}
+
+no_network_security_rules_rdp_port = rule {
+  not any tfplan.resources.azurerm_network_security_rule as _, rule {
+    strings.to_upper(rule.access) is "ALLOW" and
+    not any append(rule.destination_port_ranges, instance.destination_port_range) as _, range {
       split_range = strings.split(range, "-")
       split_range contains "*" or
       split_range contains 3899 or
@@ -12,9 +16,24 @@ anyRDP = func(rules) {
     }
   }
 }
+no_network_security_groups_rdp_port = rule {
+  not any tfplan.resources.azurerm_network_security_group as _, group {
+    rule = group.security_rule
+    strings.to_upper(rule.access) is "ALLOW" and
+    not any append(rule.destination_port_ranges, instance.destination_port_range) as _, range {
+      split_range = strings.split(range, "-")
+      split_range contains "*" or
+      split_range contains 3899 or
+      (split_range[0] < 3389 and split_range[1] > 3389)
+    }
+  }  
+}
 
 # RDP = 3389
 main = rule {
+  no_network_security_rules_rdp_port and
+  no_network_security_groups_rdp_port
+
   not anyRDP(tfplan.resources.azurerm_network_security_rule) and
   not any tfplan.resources.azurerm_network_security_group as _, group {
     not anyRDP(group.security_rule)
