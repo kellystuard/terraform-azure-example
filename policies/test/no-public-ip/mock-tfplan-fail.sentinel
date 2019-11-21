@@ -1,0 +1,218 @@
+import "strings"
+import "types"
+
+_modules = {
+	"root": {
+		"data": {},
+		"path": [],
+		"resources": {
+			"azurerm_public_ip": {
+				"denied": {
+					0: {
+						"applied": {
+							"allocation_method":       "Static",
+							"domain_name_label":       null,
+							"idle_timeout_in_minutes": 4,
+							"ip_version":              "IPv4",
+							"location":                "northcentralus",
+							"name":                    "DeniedPublicIp",
+							"public_ip_prefix_id":     null,
+							"resource_group_name":     "terraform-azure-example",
+							"reverse_fqdn":            null,
+							"sku":                     "Basic",
+							"zones":                   null,
+						},
+						"destroy": false,
+						"diff": {
+							"allocation_method": {
+								"computed": false,
+								"new":      "Static",
+								"old":      "",
+							},
+							"domain_name_label": {
+								"computed": false,
+								"new":      "",
+								"old":      "",
+							},
+							"fqdn": {
+								"computed": true,
+								"new":      "",
+								"old":      "",
+							},
+							"id": {
+								"computed": true,
+								"new":      "",
+								"old":      "",
+							},
+							"idle_timeout_in_minutes": {
+								"computed": false,
+								"new":      "4",
+								"old":      "",
+							},
+							"ip_address": {
+								"computed": true,
+								"new":      "",
+								"old":      "",
+							},
+							"ip_version": {
+								"computed": false,
+								"new":      "IPv4",
+								"old":      "",
+							},
+							"location": {
+								"computed": false,
+								"new":      "northcentralus",
+								"old":      "",
+							},
+							"name": {
+								"computed": false,
+								"new":      "DeniedPublicIp",
+								"old":      "",
+							},
+							"public_ip_address_allocation": {
+								"computed": true,
+								"new":      "",
+								"old":      "",
+							},
+							"public_ip_prefix_id": {
+								"computed": false,
+								"new":      "",
+								"old":      "",
+							},
+							"resource_group_name": {
+								"computed": false,
+								"new":      "terraform-azure-example",
+								"old":      "",
+							},
+							"reverse_fqdn": {
+								"computed": false,
+								"new":      "",
+								"old":      "",
+							},
+							"sku": {
+								"computed": false,
+								"new":      "Basic",
+								"old":      "",
+							},
+							"tags.%": {
+								"computed": true,
+								"new":      "",
+								"old":      "",
+							},
+							"zones": {
+								"computed": false,
+								"new":      "",
+								"old":      "",
+							},
+						},
+						"requires_new": false,
+					},
+				},
+			},
+			"azurerm_subnet": {
+				"internal": {
+					0: {
+						"applied": {
+							"address_prefix":    "10.0.2.0/24",
+							"delegation":        [],
+							"id":                "/subscriptions/9aa6ae03-466d-4162-8457-9687a997befe/resourceGroups/terraform-azure-example/providers/Microsoft.Network/virtualNetworks/main-network/subnets/internal",
+							"ip_configurations": [],
+							"name":              "internal",
+							"network_security_group_id": null,
+							"resource_group_name":       "terraform-azure-example",
+							"route_table_id":            "",
+							"service_endpoints":         [],
+							"virtual_network_name":      "main-network",
+						},
+						"destroy": false,
+						"diff": {
+							"address_prefix": {
+								"computed": false,
+								"new":      "10.0.2.0/24",
+								"old":      "10.0.2.0/24",
+							},
+							"delegation.#": {
+								"computed": false,
+								"new":      "0",
+								"old":      "0",
+							},
+							"id": {
+								"computed": false,
+								"new":      "/subscriptions/9aa6ae03-466d-4162-8457-9687a997befe/resourceGroups/terraform-azure-example/providers/Microsoft.Network/virtualNetworks/main-network/subnets/internal",
+								"old":      "/subscriptions/9aa6ae03-466d-4162-8457-9687a997befe/resourceGroups/terraform-azure-example/providers/Microsoft.Network/virtualNetworks/main-network/subnets/internal",
+							},
+							"ip_configurations.#": {
+								"computed": false,
+								"new":      "0",
+								"old":      "0",
+							},
+							"name": {
+								"computed": false,
+								"new":      "internal",
+								"old":      "internal",
+							},
+							"network_security_group_id": {
+								"computed": false,
+								"new":      "",
+								"old":      "/subscriptions/9aa6ae03-466d-4162-8457-9687a997befe/resourceGroups/terraform-azure-example/providers/Microsoft.Network/networkSecurityGroups/InternalSecurityGroup",
+							},
+							"resource_group_name": {
+								"computed": false,
+								"new":      "terraform-azure-example",
+								"old":      "terraform-azure-example",
+							},
+							"route_table_id": {
+								"computed": false,
+								"new":      "",
+								"old":      "",
+							},
+							"service_endpoints.#": {
+								"computed": false,
+								"new":      "0",
+								"old":      "0",
+							},
+							"virtual_network_name": {
+								"computed": false,
+								"new":      "main-network",
+								"old":      "main-network",
+							},
+						},
+						"requires_new": false,
+					},
+				},
+			},
+		},
+	},
+}
+
+module_paths = [
+	[],
+]
+
+terraform_version = "0.12.13"
+
+variables = {
+	"location": "North Central US",
+}
+
+module = func(path) {
+	if types.type_of(path) is not "list" {
+		error("expected list, got", types.type_of(path))
+	}
+
+	if length(path) < 1 {
+		return _modules.root
+	}
+
+	addr = []
+	for path as p {
+		append(addr, "module")
+		append(addr, p)
+	}
+
+	return _modules[strings.join(addr, ".")]
+}
+
+data = _modules.root.data
+path = _modules.root.path
+resources = _modules.root.resources
