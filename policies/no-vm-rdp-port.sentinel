@@ -17,9 +17,9 @@ no_network_security_rules_rdp_port = rule {
   }
 }
 no_network_security_groups_rdp_port = rule {
-  not any tfplan.resources.azurerm_network_security_group as _, group {
-    strings.to_upper(group.security_rule.access) is "ALLOW" and
-    not any append(group.security_rule.destination_port_ranges, instance.destination_port_range) as _, range {
+  not any tfplan.resources.azurerm_network_security_group as _, security_group {
+    strings.to_upper(security_group.security_rule.access) is "ALLOW" and
+    not any append(security_group.security_rule.destination_port_ranges, instance.destination_port_range) as _, range {
       range_includes_RDP(range)
     }
   }  
