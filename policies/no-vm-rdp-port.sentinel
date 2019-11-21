@@ -2,9 +2,9 @@ import "strings"
 import "tfplan"
 
 anyRDP = func(rules) {
-  return not any rules as _, rule {
-    strings.to_upper(rule.access) is "ALLOW" and
-    not any append(rule.destination_port_ranges, instance.destination_port_range) as _, range {
+  return not any rules as _, security_rule {
+    strings.to_upper(security_rule.access) is "ALLOW" and
+    not any append(security_rule.destination_port_ranges, instance.destination_port_range) as _, range {
       split = strings.split(range, "-")
       split contains "*" or
       split contains 3899 or
