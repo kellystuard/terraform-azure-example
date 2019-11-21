@@ -4,7 +4,7 @@ import "tfplan"
 range_includes_RDP = func(port_range) {
   split_range = strings.split(port_range, "-")
   return split_range contains "*" or
-    split_range contains 3899 or
+    split_range contains 3389 or
     (split_range[0] < 3389 and split_range[1] > 3389)
 }
 
