@@ -18,6 +18,7 @@ no_network_security_rules_rdp_port = rule {
 }
 no_network_security_groups_rdp_port = rule {
   not any tfplan.resources.azurerm_network_security_group as _, security_group {
+    security_group.security_rule is undefined or
     not any security_group.security_rule as _, security_rule {
       strings.to_upper(security_rule.access) is "ALLOW" and
       not any append(security_rule.destination_port_ranges, instance.destination_port_range) as _, port_range {
