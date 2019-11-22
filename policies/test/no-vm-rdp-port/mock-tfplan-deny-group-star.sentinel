@@ -1,0 +1,267 @@
+import "strings"
+import "types"
+
+_modules = {
+	"root": {
+		"data": {},
+		"path": [],
+		"resources": {
+			"azurerm_network_security_group": {
+				"internal": {
+					0: {
+						"applied": {
+							"id":                  "/subscriptions/9aa6ae03-466d-4162-8457-9687a997befe/resourceGroups/terraform-azure-example/providers/Microsoft.Network/networkSecurityGroups/InternalSecurityGroup",
+							"location":            "northcentralus",
+							"name":                "InternalSecurityGroup",
+							"resource_group_name": "terraform-azure-example",
+							"security_rule": [
+								{
+									"access":                                     "Deny",
+									"description":                                "",
+									"destination_address_prefix":                 "*",
+									"destination_address_prefixes":               [],
+									"destination_application_security_group_ids": [],
+									"destination_port_range":                     "*",
+									"destination_port_ranges":                    [],
+									"direction":                                  "Inbound",
+									"name":                                       "testRDP",
+									"priority":                                   100,
+									"protocol":                                   "Tcp",
+									"source_address_prefix":                      "*",
+									"source_address_prefixes":                    [],
+									"source_application_security_group_ids":      [],
+									"source_port_range":                          "*",
+									"source_port_ranges":                         [],
+								},
+							],
+							"tags": {},
+						},
+						"destroy": false,
+						"diff": {
+							"id": {
+								"computed": false,
+								"new":      "/subscriptions/9aa6ae03-466d-4162-8457-9687a997befe/resourceGroups/terraform-azure-example/providers/Microsoft.Network/networkSecurityGroups/InternalSecurityGroup",
+								"old":      "/subscriptions/9aa6ae03-466d-4162-8457-9687a997befe/resourceGroups/terraform-azure-example/providers/Microsoft.Network/networkSecurityGroups/InternalSecurityGroup",
+							},
+							"location": {
+								"computed": false,
+								"new":      "northcentralus",
+								"old":      "northcentralus",
+							},
+							"name": {
+								"computed": false,
+								"new":      "InternalSecurityGroup",
+								"old":      "InternalSecurityGroup",
+							},
+							"resource_group_name": {
+								"computed": false,
+								"new":      "terraform-azure-example",
+								"old":      "terraform-azure-example",
+							},
+							"security_rule.#": {
+								"computed": false,
+								"new":      "1",
+								"old":      "1",
+							},
+							"security_rule.0.%": {
+								"computed": false,
+								"new":      "16",
+								"old":      "16",
+							},
+							"security_rule.0.access": {
+								"computed": false,
+								"new":      "Deny",
+								"old":      "Deny",
+							},
+							"security_rule.0.description": {
+								"computed": false,
+								"new":      "",
+								"old":      "",
+							},
+							"security_rule.0.destination_address_prefix": {
+								"computed": false,
+								"new":      "*",
+								"old":      "*",
+							},
+							"security_rule.0.destination_address_prefixes.#": {
+								"computed": false,
+								"new":      "0",
+								"old":      "0",
+							},
+							"security_rule.0.destination_application_security_group_ids.#": {
+								"computed": false,
+								"new":      "0",
+								"old":      "0",
+							},
+							"security_rule.0.destination_port_range": {
+								"computed": false,
+								"new":      "*",
+								"old":      "3899",
+							},
+							"security_rule.0.destination_port_ranges.#": {
+								"computed": false,
+								"new":      "0",
+								"old":      "0",
+							},
+							"security_rule.0.direction": {
+								"computed": false,
+								"new":      "Inbound",
+								"old":      "Inbound",
+							},
+							"security_rule.0.name": {
+								"computed": false,
+								"new":      "testRDP",
+								"old":      "testRDP",
+							},
+							"security_rule.0.priority": {
+								"computed": false,
+								"new":      "100",
+								"old":      "100",
+							},
+							"security_rule.0.protocol": {
+								"computed": false,
+								"new":      "Tcp",
+								"old":      "Tcp",
+							},
+							"security_rule.0.source_address_prefix": {
+								"computed": false,
+								"new":      "*",
+								"old":      "*",
+							},
+							"security_rule.0.source_address_prefixes.#": {
+								"computed": false,
+								"new":      "0",
+								"old":      "0",
+							},
+							"security_rule.0.source_application_security_group_ids.#": {
+								"computed": false,
+								"new":      "0",
+								"old":      "0",
+							},
+							"security_rule.0.source_port_range": {
+								"computed": false,
+								"new":      "*",
+								"old":      "*",
+							},
+							"security_rule.0.source_port_ranges.#": {
+								"computed": false,
+								"new":      "0",
+								"old":      "0",
+							},
+							"tags.%": {
+								"computed": false,
+								"new":      "0",
+								"old":      "0",
+							},
+						},
+						"requires_new": false,
+					},
+				},
+			},
+			"azurerm_subnet": {
+				"internal": {
+					0: {
+						"applied": {
+							"address_prefix":    "10.0.2.0/24",
+							"delegation":        [],
+							"id":                "/subscriptions/9aa6ae03-466d-4162-8457-9687a997befe/resourceGroups/terraform-azure-example/providers/Microsoft.Network/virtualNetworks/main-network/subnets/internal",
+							"ip_configurations": [],
+							"name":              "internal",
+							"network_security_group_id": null,
+							"resource_group_name":       "terraform-azure-example",
+							"route_table_id":            "",
+							"service_endpoints":         [],
+							"virtual_network_name":      "main-network",
+						},
+						"destroy": false,
+						"diff": {
+							"address_prefix": {
+								"computed": false,
+								"new":      "10.0.2.0/24",
+								"old":      "10.0.2.0/24",
+							},
+							"delegation.#": {
+								"computed": false,
+								"new":      "0",
+								"old":      "0",
+							},
+							"id": {
+								"computed": false,
+								"new":      "/subscriptions/9aa6ae03-466d-4162-8457-9687a997befe/resourceGroups/terraform-azure-example/providers/Microsoft.Network/virtualNetworks/main-network/subnets/internal",
+								"old":      "/subscriptions/9aa6ae03-466d-4162-8457-9687a997befe/resourceGroups/terraform-azure-example/providers/Microsoft.Network/virtualNetworks/main-network/subnets/internal",
+							},
+							"ip_configurations.#": {
+								"computed": false,
+								"new":      "0",
+								"old":      "0",
+							},
+							"name": {
+								"computed": false,
+								"new":      "internal",
+								"old":      "internal",
+							},
+							"network_security_group_id": {
+								"computed": false,
+								"new":      "",
+								"old":      "/subscriptions/9aa6ae03-466d-4162-8457-9687a997befe/resourceGroups/terraform-azure-example/providers/Microsoft.Network/networkSecurityGroups/InternalSecurityGroup",
+							},
+							"resource_group_name": {
+								"computed": false,
+								"new":      "terraform-azure-example",
+								"old":      "terraform-azure-example",
+							},
+							"route_table_id": {
+								"computed": false,
+								"new":      "",
+								"old":      "",
+							},
+							"service_endpoints.#": {
+								"computed": false,
+								"new":      "0",
+								"old":      "0",
+							},
+							"virtual_network_name": {
+								"computed": false,
+								"new":      "main-network",
+								"old":      "main-network",
+							},
+						},
+						"requires_new": false,
+					},
+				},
+			},
+		},
+	},
+}
+
+module_paths = [
+	[],
+]
+
+terraform_version = "0.12.13"
+
+variables = {
+	"location": "North Central US",
+}
+
+module = func(path) {
+	if types.type_of(path) is not "list" {
+		error("expected list, got", types.type_of(path))
+	}
+
+	if length(path) < 1 {
+		return _modules.root
+	}
+
+	addr = []
+	for path as p {
+		append(addr, "module")
+		append(addr, p)
+	}
+
+	return _modules[strings.join(addr, ".")]
+}
+
+data = _modules.root.data
+path = _modules.root.path
+resources = _modules.root.resources
