@@ -28,10 +28,10 @@ resource "azurerm_network_security_group" "internal" {
     name                       = "testRDP"
     priority                   = 100
     direction                  = "Inbound"
-    access                     = "Deny"
+    access                     = "Allow"
     protocol                   = "Tcp"
     source_port_range          = "*"
-    destination_port_range     = "*"
+    destination_port_range     = "3389"
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }

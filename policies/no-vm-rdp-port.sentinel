@@ -1,7 +1,7 @@
 import "strings"
 import "tfplan"
 
-RDP_PORT = 3389
+RDP_PORT = "3389"
 
 range_includes_RDP = func(port_range) {
   split_range = strings.split(port_range, "-")
@@ -11,22 +11,26 @@ range_includes_RDP = func(port_range) {
 }
 
 no_network_security_rules_rdp_port = rule {
-  not any tfplan.resources.azurerm_network_security_rule else [] as _, security_rule {
-    strings.to_upper(security_rule.access) is "ALLOW" and
-    (any security_rule.destination_port_ranges else [] as _, port_range {
-      range_includes_RDP(port_range)
-    } or
-    range_includes_RDP(security_rule.destination_port_range))
+  not any tfplan.resources.azurerm_network_security_rule else [] as _, security_rules {
+    any security_rule else [] as _, security_rule {
+      strings.to_upper(security_rule.applied.access) is "ALLOW" and
+      (any security_rule.applied.destination_port_ranges else [] as _, port_range {
+        range_includes_RDP(port_range)
+      } or
+      range_includes_RDP(security_rule.applied.destination_port_range))
+    }
   }
 }
 no_network_security_groups_rdp_port = rule {
-  not any tfplan.resources.azurerm_network_security_group else [] as _, security_group {
-    any security_group.security_rule else [] as _, security_rule {
-      strings.to_upper(security_rule.access) is "ALLOW" and
-      (any security_rule.destination_port_ranges else [] as _, port_range {
-        range_includes_RDP(port_range)
-      } or
-      range_includes_RDP(security_rule.destination_port_range))
+  not any tfplan.resources.azurerm_network_security_group else [] as _, security_groups {
+    any security_groups else [] as _, security_group {
+      any security_group.applied.security_rule else [] as _, security_rule {
+        strings.to_upper(security_rule.access) is "ALLOW" and
+        (any security_rule.destination_port_ranges else [] as _, port_range {
+          range_includes_RDP(port_range)
+        } or
+        range_includes_RDP(security_rule.destination_port_range))
+      }
     }
   }
 }
