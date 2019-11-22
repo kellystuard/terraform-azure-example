@@ -5,9 +5,9 @@ RDP_PORT = 3389
 
 range_includes_RDP = func(port_range) {
   split_range = strings.split(port_range, "-")
-  return split_range contains "*" or
-    split_range contains RDP_PORT or
-    (split_range[0] < RDP_PORT and split_range[1] > RDP_PORT)
+  return port_range is RDP_PORT or
+    split_range contains "*" or
+    (split_range[0] <= RDP_PORT and split_range[1] >= RDP_PORT)
 }
 
 no_network_security_rules_rdp_port = rule {
