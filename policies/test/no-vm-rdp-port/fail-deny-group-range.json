@@ -1,0 +1,8 @@
+{
+  "mock": {
+    "tfplan": "mock-tfplan-allow-group-range.sentinel"
+  },
+  "test": {
+    "main": false
+  }
+}

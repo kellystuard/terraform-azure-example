@@ -3,6 +3,6 @@
     "tfplan": "mock-tfplan-deny-group-3389.sentinel"
   },
   "test": {
-    "main": false
+    "main": true
   }
 }

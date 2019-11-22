@@ -1,11 +1,13 @@
 import "strings"
 import "tfplan"
 
+RDP_PORT = 3389
+
 range_includes_RDP = func(port_range) {
   split_range = strings.split(port_range, "-")
   return split_range contains "*" or
-    split_range contains 3389 or
-    (split_range[0] < 3389 and split_range[1] > 3389)
+    split_range contains RDP_PORT or
+    (split_range[0] < RDP_PORT and split_range[1] > RDP_PORT)
 }
 
 no_network_security_rules_rdp_port = rule {
@@ -29,7 +31,6 @@ no_network_security_groups_rdp_port = rule {
   }
 }
 
-# RDP = 3389
 main = rule {
   no_network_security_rules_rdp_port and
   no_network_security_groups_rdp_port
