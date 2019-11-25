@@ -14,10 +14,11 @@ resource "azurerm_lb" "test" {
   resource_group_name = azurerm_resource_group.main.name
 }
 resource "azurerm_subnet" "internal" {
-  name                      = "internal"
+  name                      = "internal-subnet"
   resource_group_name       = azurerm_resource_group.main.name
   virtual_network_name      = azurerm_virtual_network.main.name
   address_prefix            = "10.0.2.0/24"
+  network_security_group_id = azurerm_network_security_group.internal.id
 }
 resource "azurerm_network_security_group" "internal" {
   name                = "InternalSecurityGroup"
