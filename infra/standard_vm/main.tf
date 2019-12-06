@@ -58,5 +58,6 @@ resource "azurerm_virtual_machine" "app" {
   tags = {
     environment = "example"
     os_type = "linux"
+    cost_center = var.cost_center
   }
 }

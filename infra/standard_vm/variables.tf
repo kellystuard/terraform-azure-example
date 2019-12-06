@@ -10,3 +10,7 @@ variable "resource_group_name" {
 variable "subnet_id" {
   type = "string"
 }
+variable "cost_center" {
+  type = "string"
+  default = ""
+}
