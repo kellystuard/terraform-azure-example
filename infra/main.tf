@@ -22,8 +22,8 @@ resource "azurerm_subnet" "internal" {
 }
 resource "azurerm_network_security_group" "internal" {
   name                = "InternalSecurityGroup"
-  location            = "${azurerm_resource_group.main.location}"
-  resource_group_name = "${azurerm_resource_group.main.name}"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
 
   security_rule {
     name                       = "testRDP"
@@ -38,25 +38,25 @@ resource "azurerm_network_security_group" "internal" {
   }
 }
 resource "azurerm_subnet_network_security_group_association" "internal" {
-  subnet_id                 = "${azurerm_subnet.internal.id}"
-  network_security_group_id = "${azurerm_network_security_group.internal.id}"
+  subnet_id                 = azurerm_subnet.internal.id
+  network_security_group_id = azurerm_network_security_group.internal.id
 }
 
 # Uncomment these to show spinning up two module instances
-module "app1" {
-source              = "./standard_vm"
- name                = "moduleapp1"
- resource_group_name = azurerm_resource_group.main.name
- location            = azurerm_resource_group.main.location
- subnet_id           = azurerm_subnet.internal.id
-}
-module "app2" {
- source              = "./standard_vm"
- name                = "moduleapp2"
- resource_group_name = azurerm_resource_group.main.name
- location            = azurerm_resource_group.main.location
-subnet_id           = azurerm_subnet.internal.id
-}
+#module "app1" {
+# source              = "./standard_vm"
+#  name                = "moduleapp1"
+#  resource_group_name = azurerm_resource_group.main.name
+#  location            = azurerm_resource_group.main.location
+#  subnet_id           = azurerm_subnet.internal.id
+#}
+#module "app2" {
+#  source              = "./standard_vm"
+#  name                = "moduleapp2"
+#  resource_group_name = azurerm_resource_group.main.name
+#  location            = azurerm_resource_group.main.location
+# subnet_id           = azurerm_subnet.internal.id
+#}
 
 # This resource should fail, due to policy
 #resource "azurerm_public_ip" "denied" {
