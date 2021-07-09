@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "azurerm" {
-  subscription_id = var.rm_subscription_id
+  subscription_id = var.arm_subscription_id
   tenant_id       = var.arm_tenant_id
   client_id       = var.arm_client_id
   client_secret   = var.arm_client_secret
