@@ -4,17 +4,21 @@ variable "location" {
 }
 
 variable "arm_subscription_id" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "arm_tenant_id" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "arm_client_id" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "arm_client_secret" {
-  type = string
+  type    = string
+  default = ""
 }
