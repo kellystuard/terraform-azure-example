@@ -34,9 +34,9 @@ resource "azurerm_linux_virtual_machine" "db" {
   admin_password                  = random_password.password.result
   disable_password_authentication = false
 
-  priority        = "Spot"
-  eviction_policy = "Deallocate"
-  max_bid_price   = -1
+  # priority        = "Spot"
+  # eviction_policy = "Deallocate"
+  # max_bid_price   = -1
 
   source_image_reference {
     publisher = "Canonical"
