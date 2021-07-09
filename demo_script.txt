@@ -1,0 +1,28 @@
+* Show current environment: example application deployed
+* Show example directory, pointing out that everything in development environment matches up to .tf files 1:1
+* Have task of {insert-task-here}
+* Show operations environment: example only in single environment
+* Provision test environment
+        test = {
+          name   = "Example Test"
+        }
+        production = {
+          name   = "Example Production"
+          cost_center = "88150" # non-default cost center for specific environment
+        }
+* Create test branch from development
+* Show that development and test are identical
+
+
+
+
+    # other = {
+    #   cost_center = "88151" # default cost center for all environments
+    #   terraform_version = "1.0.2" # this application has a specific terraform version requirement
+    #   environments = {
+    #     development = {
+    #       name   = "Other Development"
+    #       branch = "dev"
+    #     }
+    #   }
+    # }

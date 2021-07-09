@@ -1,4 +1,3 @@
-variable "location" {
-    type    = "string"
-    default = "North Central US"
+variable "tfe_token" {
+  type = string
 }
