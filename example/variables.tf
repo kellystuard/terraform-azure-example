@@ -13,20 +13,20 @@ variable "cost_center" {
 
 variable "arm_subscription_id" {
   type    = string
-  default = ""
+  default = null
 }
 
 variable "arm_tenant_id" {
   type    = string
-  default = ""
+  default = null
 }
 
 variable "arm_client_id" {
   type    = string
-  default = ""
+  default = null
 }
 
 variable "arm_client_secret" {
   type    = string
-  default = ""
+  default = null
 }
