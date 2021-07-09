@@ -30,7 +30,7 @@ resource "azurerm_linux_virtual_machine" "db" {
   location              = azurerm_resource_group.main.location
   resource_group_name   = azurerm_resource_group.main.name
   network_interface_ids = [azurerm_network_interface.example.id]
-  sku                  = "Standard_A1"
+  size                  = "Standard_A1"
 
   admin_username                  = "example"
   admin_password                  = random_password.password.result
@@ -54,11 +54,13 @@ resource "azurerm_linux_virtual_machine" "db" {
     os_type     = "linux"
   }
 }
+
 resource "azurerm_linux_virtual_machine_scale_set" "web" {
-  name                  = "web-vm-${var.environment}"
-  location              = azurerm_resource_group.main.location
-  resource_group_name   = azurerm_resource_group.main.name
-  size                  = "Standard_A1"
+  name                = "web-vm-${var.environment}"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+  sku                 = "Standard_A1"
+  instances           = 3
 
   admin_username                  = "example"
   admin_password                  = random_password.password.result
@@ -77,9 +79,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "web" {
   }
 
   network_interface {
-    name = "example-${var.environment}"
+    name    = "example-${var.environment}"
     primary = true
-    
+
     ip_configuration {
       name      = "internal"
       primary   = true
