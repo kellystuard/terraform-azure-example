@@ -28,7 +28,7 @@ resource "azurerm_linux_virtual_machine" "db" {
   location              = azurerm_resource_group.main.location
   resource_group_name   = azurerm_resource_group.main.name
   network_interface_ids = [azurerm_network_interface.example.id]
-  size                  = "Standard_A0"
+  size                  = "Standard_A1"
 
   admin_username                  = "example"
   admin_password                  = random_password.password.result
