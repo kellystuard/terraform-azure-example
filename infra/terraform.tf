@@ -28,6 +28,16 @@ resource "tfe_workspace" "applications" {
   }
 }
 
+resource "tfe_variable" "environment" {
+  for_each = local.application_environments
+
+  key          = "environment"
+  value        = each.value.id
+  category     = "terraform"
+  description  = "Environment Name"
+  workspace_id = tfe_workspace.applications[each.key].id
+}
+
 resource "tfe_variable" "cost_center" {
   for_each = local.application_environments
 
@@ -37,4 +47,40 @@ resource "tfe_variable" "cost_center" {
   description  = "Cost Center for Billing"
   workspace_id = tfe_workspace.applications[each.key].id
   # application's cost center > environment's cost center
+}
+
+resource "tfe_variable" "ARM_SUBSCRIPTION_ID" {
+  for_each = local.application_environments
+
+  key          = "ARM_SUBSCRIPTION_ID"
+  value        = var.arm_subscription_id
+  category     = "env"
+  workspace_id = tfe_workspace.applications[each.key].id
+}
+
+resource "tfe_variable" "ARM_TENANT_ID" {
+  for_each = local.application_environments
+
+  key          = "ARM_TENANT_ID"
+  value        = var.arm_tenant_id
+  category     = "env"
+  workspace_id = tfe_workspace.applications[each.key].id
+}
+
+resource "tfe_variable" "ARM_CLIENT_ID" {
+  for_each = local.application_environments
+
+  key          = "ARM_CLIENT_ID"
+  value        = var.arm_client_id
+  category     = "env"
+  workspace_id = tfe_workspace.applications[each.key].id
+}
+
+resource "tfe_variable" "ARM_CLIENT_SECRET" {
+  for_each = local.application_environments
+
+  key          = "ARM_CLIENT_SECRET"
+  value        = var.arm_client_secret
+  category     = "env"
+  workspace_id = tfe_workspace.applications[each.key].id
 }

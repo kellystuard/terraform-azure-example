@@ -2,11 +2,15 @@ terraform {
   required_version = "~>1.0.0"
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
       version = "~>2.66"
     }
   }
 }
 
-provider azurerm {
+provider "azurerm" {
+  subscription_id = arm_subscription_id
+  tenant_id       = arm_tenant_id
+  client_id       = arm_client_id
+  client_secret   = arm_client_secret
 }

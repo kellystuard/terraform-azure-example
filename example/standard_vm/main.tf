@@ -48,7 +48,7 @@ resource "azurerm_virtual_machine" "app" {
     managed_disk_type = "Standard_LRS"
   }
   os_profile {
-    computer_name  = "${var.name}"
+    computer_name  = var.name
     admin_username = "azureadmin"
     admin_password = random_password.password.result
   }
@@ -57,7 +57,7 @@ resource "azurerm_virtual_machine" "app" {
   }
   tags = {
     environment = "example"
-    os_type = "linux"
+    os_type     = "linux"
     cost_center = var.cost_center
   }
 }
