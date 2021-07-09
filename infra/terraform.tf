@@ -83,4 +83,5 @@ resource "tfe_variable" "ARM_CLIENT_SECRET" {
   value        = var.arm_client_secret
   category     = "env"
   workspace_id = tfe_workspace.applications[each.key].id
+  sensitive    = true
 }
