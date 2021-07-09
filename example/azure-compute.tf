@@ -28,15 +28,15 @@ resource "azurerm_linux_virtual_machine" "db" {
   location              = azurerm_resource_group.main.location
   resource_group_name   = azurerm_resource_group.main.name
   network_interface_ids = [azurerm_network_interface.example.id]
-  size               = "A1 v2"
+  size                  = "Standard_A0"
 
-  admin_username = "example"
-  admin_password = random_password.password.result
+  admin_username                  = "example"
+  admin_password                  = random_password.password.result
   disable_password_authentication = false
 
-  priority = "Spot"
+  priority        = "Spot"
   eviction_policy = "Deallocate"
-  max_bid_price = -1
+  max_bid_price   = -1
 
   source_image_reference {
     publisher = "Canonical"
@@ -46,7 +46,7 @@ resource "azurerm_linux_virtual_machine" "db" {
   }
 
   os_disk {
-    caching = "None"
+    caching              = "None"
     storage_account_type = "Standard_LRS"
   }
   tags = {
