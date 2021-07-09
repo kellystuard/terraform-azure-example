@@ -1,7 +1,8 @@
-# resource "azurerm_resource_group" "main" {
-#   name     = "terraform-azure-example"
-#   location = var.location
-# }
+resource "azurerm_resource_group" "main" {
+  name     = "terraform-azure-example-${var.environment}"
+  location = var.location
+}
+
 # resource "azurerm_virtual_network" "main" {
 #   name                = "main-network"
 #   resource_group_name = azurerm_resource_group.main.name

@@ -3,6 +3,14 @@ variable "location" {
   default = "North Central US"
 }
 
+variable "environment" {
+  type = string
+}
+
+variable "cost_center" {
+  type = string
+}
+
 variable "arm_subscription_id" {
   type    = string
   default = ""
