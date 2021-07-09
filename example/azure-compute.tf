@@ -12,6 +12,7 @@ resource "random_password" "password" {
   min_numeric = 1
   min_special = 1
 }
+
 resource "azurerm_network_interface" "example" {
   name                = "nic-${var.environment}"
   location            = azurerm_resource_group.main.location
@@ -23,6 +24,7 @@ resource "azurerm_network_interface" "example" {
     private_ip_address_allocation = "Dynamic"
   }
 }
+
 resource "azurerm_linux_virtual_machine" "db" {
   name                  = "db-vm-${var.environment}"
   location              = azurerm_resource_group.main.location
@@ -33,10 +35,6 @@ resource "azurerm_linux_virtual_machine" "db" {
   admin_username                  = "example"
   admin_password                  = random_password.password.result
   disable_password_authentication = false
-
-  # priority        = "Spot"
-  # eviction_policy = "Deallocate"
-  # max_bid_price   = -1
 
   source_image_reference {
     publisher = "Canonical"
@@ -49,6 +47,46 @@ resource "azurerm_linux_virtual_machine" "db" {
     caching              = "None"
     storage_account_type = "Standard_LRS"
   }
+
+  tags = {
+    application = "example"
+    environment = var.environment
+    os_type     = "linux"
+  }
+}
+resource "azurerm_linux_virtual_machine_scale_set" "web" {
+  name                  = "web-vm-${var.environment}"
+  location              = azurerm_resource_group.main.location
+  resource_group_name   = azurerm_resource_group.main.name
+  size                  = "Standard_A1"
+
+  admin_username                  = "example"
+  admin_password                  = random_password.password.result
+  disable_password_authentication = false
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "18.04-LTS"
+    version   = "latest"
+  }
+
+  os_disk {
+    caching              = "None"
+    storage_account_type = "Standard_LRS"
+  }
+
+  network_interface {
+    name = "example-${var.environment}"
+    primary = true
+    
+    ip_configuration {
+      name      = "internal"
+      primary   = true
+      subnet_id = azurerm_subnet.internal.id
+    }
+  }
+
   tags = {
     application = "example"
     environment = var.environment
