@@ -34,5 +34,5 @@ resource "azurerm_network_security_group" "no_rdp" {
 }
 resource "azurerm_subnet_network_security_group_association" "internal" {
   subnet_id                 = azurerm_subnet.internal.id
-  network_security_group_id = azurerm_network_security_group.internal.id
+  network_security_group_id = azurerm_network_security_group.no_rdp.id
 }
