@@ -29,7 +29,7 @@ resource "azurerm_linux_virtual_machine" "db" {
   name                  = "db-vm-${var.environment}"
   location              = azurerm_resource_group.main.location
   resource_group_name   = azurerm_resource_group.main.name
-  network_interface_ids = [azurerm_network_interface.example.id]
+  network_interface_ids = [azurerm_network_interface.db.id]
   size                  = "Standard_A1"
 
   admin_username                  = "example"
@@ -71,7 +71,7 @@ resource "azurerm_linux_virtual_machine" "utility" {
   name                  = "utility-vm-${var.environment}"
   location              = azurerm_resource_group.main.location
   resource_group_name   = azurerm_resource_group.main.name
-  network_interface_ids = [azurerm_network_interface.example.id]
+  network_interface_ids = [azurerm_network_interface.utility.id]
   size                  = "Standard_A1"
 
   admin_username                  = "example"
