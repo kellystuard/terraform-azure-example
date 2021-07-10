@@ -5,7 +5,7 @@ resource "azurerm_virtual_network" "main" {
   address_space       = ["10.0.0.0/16"]
 }
 resource "azurerm_lb" "test" {
-  name                = "TestLoadBalancer"
+  name                = "web-load-balancer"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 }

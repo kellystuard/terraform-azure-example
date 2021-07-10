@@ -55,6 +55,36 @@ resource "azurerm_linux_virtual_machine" "db" {
   }
 }
 
+resource "azurerm_linux_virtual_machine" "utility" {
+  name                  = "utility-vm-${var.environment}"
+  location              = azurerm_resource_group.main.location
+  resource_group_name   = azurerm_resource_group.main.name
+  network_interface_ids = [azurerm_network_interface.example.id]
+  size                  = "Standard_A1"
+
+  admin_username                  = "example"
+  admin_password                  = random_password.password.result
+  disable_password_authentication = false
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "18.04-LTS"
+    version   = "latest"
+  }
+
+  os_disk {
+    caching              = "None"
+    storage_account_type = "Standard_LRS"
+  }
+
+  tags = {
+    application = "example"
+    environment = var.environment
+    os_type     = "linux"
+  }
+}
+
 resource "azurerm_linux_virtual_machine_scale_set" "web" {
   name                = "web-vm-${var.environment}"
   location            = azurerm_resource_group.main.location
