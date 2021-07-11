@@ -137,3 +137,45 @@ resource "azurerm_linux_virtual_machine_scale_set" "web" {
     os_type     = "linux"
   }
 }
+
+resource "azurerm_network_profile" "static" {
+  name                = "static-profile"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+
+  container_network_interface {
+    name = "static-nic"
+
+    ip_configuration {
+      name      = "static-configuration"
+      subnet_id = azurerm_subnet.internal.id
+    }
+  }
+}
+
+resource "azurerm_container_group" "static" {
+  name                = "static"
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
+  os_type             = "Linux"
+  ip_address_type     = "Private"
+  network_profile_id  = azurerm_network_profile.static.id
+
+  container {
+    name   = "hello-world"
+    image  = "microsoft/aci-helloworld:latest"
+    cpu    = "0.5"
+    memory = "0.5"
+
+    ports {
+      port     = 443
+      protocol = "TCP"
+    }
+  }
+
+  tags = {
+    application = "example"
+    environment = var.environment
+    os_type     = "linux"
+  }
+}
