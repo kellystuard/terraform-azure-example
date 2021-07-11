@@ -20,7 +20,7 @@ resource "azurerm_network_interface" "db" {
 
   ip_configuration {
     name                          = "example-configuration-${var.environment}"
-    subnet_id                     = azurerm_subnet.internal.id
+    subnet_id                     = azurerm_subnet.db.id
     private_ip_address_allocation = "Dynamic"
   }
 }
@@ -62,7 +62,7 @@ resource "azurerm_network_interface" "utility" {
 
   ip_configuration {
     name                          = "example-configuration-${var.environment}"
-    subnet_id                     = azurerm_subnet.internal.id
+    subnet_id                     = azurerm_subnet.db.id
     private_ip_address_allocation = "Dynamic"
   }
 }
@@ -127,7 +127,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "web" {
     ip_configuration {
       name      = "internal"
       primary   = true
-      subnet_id = azurerm_subnet.internal.id
+      subnet_id = azurerm_subnet.web.id
     }
   }
 
@@ -148,7 +148,7 @@ resource "azurerm_network_profile" "static" {
 
     ip_configuration {
       name      = "static-configuration"
-      subnet_id = azurerm_subnet.internal.id
+      subnet_id = azurerm_subnet.container.id
     }
   }
 }
