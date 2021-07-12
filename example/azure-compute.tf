@@ -14,12 +14,12 @@ resource "random_password" "password" {
 }
 
 resource "azurerm_network_interface" "db" {
-  name                = "web-nic-${var.environment}"
+  name                = "db-nic"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
   ip_configuration {
-    name                          = "example-configuration-${var.environment}"
+    name                          = "web-configuration"
     subnet_id                     = azurerm_subnet.db.id
     private_ip_address_allocation = "Dynamic"
   }
@@ -32,7 +32,7 @@ resource "azurerm_network_interface" "db" {
 }
 
 resource "azurerm_linux_virtual_machine" "db" {
-  name                  = "db-vm-${var.environment}"
+  name                  = "db-vm"
   location              = azurerm_resource_group.main.location
   resource_group_name   = azurerm_resource_group.main.name
   network_interface_ids = [azurerm_network_interface.db.id]
@@ -63,12 +63,12 @@ resource "azurerm_linux_virtual_machine" "db" {
 }
 
 resource "azurerm_network_interface" "utility" {
-  name                = "utility-nic-${var.environment}"
+  name                = "utility-nic"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
   ip_configuration {
-    name                          = "example-configuration-${var.environment}"
+    name                          = "utility-configuration"
     subnet_id                     = azurerm_subnet.db.id
     private_ip_address_allocation = "Dynamic"
   }
@@ -81,7 +81,7 @@ resource "azurerm_network_interface" "utility" {
 }
 
 resource "azurerm_linux_virtual_machine" "utility" {
-  name                  = "utility-vm-${var.environment}"
+  name                  = "utility-vm"
   location              = azurerm_resource_group.main.location
   resource_group_name   = azurerm_resource_group.main.name
   network_interface_ids = [azurerm_network_interface.utility.id]
@@ -112,7 +112,7 @@ resource "azurerm_linux_virtual_machine" "utility" {
 }
 
 resource "azurerm_linux_virtual_machine_scale_set" "web" {
-  name                = "web-vm-${var.environment}"
+  name                = "web-vm"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
   sku                 = "Standard_A1"
@@ -135,7 +135,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "web" {
   }
 
   network_interface {
-    name    = "example-${var.environment}"
+    name    = "web-nic"
     primary = true
 
     ip_configuration {
@@ -175,7 +175,7 @@ resource "azurerm_network_profile" "static" {
 }
 
 resource "azurerm_container_group" "static" {
-  name                = "static"
+  name                = "static-containers"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   os_type             = "Linux"
