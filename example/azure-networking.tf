@@ -48,7 +48,3 @@ resource "azurerm_subnet_network_security_group_association" "web-no-rdp" {
   subnet_id                 = azurerm_subnet.web.id
   network_security_group_id = azurerm_network_security_group.no_rdp.id
 }
-resource "azurerm_subnet_network_security_group_association" "container-no-rdp" {
-  subnet_id                 = azurerm_subnet.container.id
-  network_security_group_id = azurerm_network_security_group.no_rdp.id
-}
