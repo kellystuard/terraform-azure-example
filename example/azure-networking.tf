@@ -3,11 +3,23 @@ resource "azurerm_virtual_network" "main" {
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
   address_space       = ["10.0.0.0/16"]
+
+  tags = {
+    application = "example"
+    cost_center = var.cost_center
+    environment = var.environment
+  }
 }
 resource "azurerm_lb" "test" {
   name                = "web-load-balancer"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
+
+  tags = {
+    application = "example"
+    cost_center = var.cost_center
+    environment = var.environment
+  }
 }
 resource "azurerm_subnet" "web" {
   name                 = "web-subnet"
@@ -26,7 +38,11 @@ resource "azurerm_subnet" "container" {
 
     service_delegation {
       name    = "Microsoft.ContainerInstance/containerGroups"
-      actions = ["Microsoft.Network/virtualNetworks/subnets/join/action", "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action"]
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/action",
+        "Microsoft.Network/virtualNetworks/subnets/join/action", 
+        "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action"
+      ]
     }
   }
 }
@@ -51,6 +67,12 @@ resource "azurerm_network_security_group" "no_rdp" {
     destination_port_range     = "3389"
     source_address_prefix      = "*"
     destination_address_prefix = "*"
+  }
+
+  tags = {
+    application = "example"
+    cost_center = var.cost_center
+    environment = var.environment
   }
 }
 resource "azurerm_subnet_network_security_group_association" "web-no-rdp" {

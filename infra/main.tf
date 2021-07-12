@@ -10,7 +10,7 @@ locals {
     example = {
       cost_center = "88149" # default cost center for all environments
       environments = {
-        development = {
+        dev = {
           name   = "Example Development"
           branch = null
         }
@@ -21,9 +21,9 @@ locals {
   application_defaults = {
     terraform_version = "1.0.1"
     environments = {
-      development = null
-      test        = "test"
-      production  = "prod"
+      dev = null
+      tst = "test"
+      prd = "prod"
     }
   }
 

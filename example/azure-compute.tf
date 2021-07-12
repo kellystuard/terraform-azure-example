@@ -23,6 +23,12 @@ resource "azurerm_network_interface" "db" {
     subnet_id                     = azurerm_subnet.db.id
     private_ip_address_allocation = "Dynamic"
   }
+
+  tags = {
+    application = "example"
+    cost_center = var.cost_center
+    environment = var.environment
+  }
 }
 
 resource "azurerm_linux_virtual_machine" "db" {
@@ -30,7 +36,7 @@ resource "azurerm_linux_virtual_machine" "db" {
   location              = azurerm_resource_group.main.location
   resource_group_name   = azurerm_resource_group.main.name
   network_interface_ids = [azurerm_network_interface.db.id]
-  size                  = "Standard_A2"
+  size                  = "Standard_A1"
 
   admin_username                  = "example"
   admin_password                  = random_password.password.result
@@ -50,6 +56,7 @@ resource "azurerm_linux_virtual_machine" "db" {
 
   tags = {
     application = "example"
+    cost_center = var.cost_center
     environment = var.environment
     os_type     = "linux"
   }
@@ -64,6 +71,12 @@ resource "azurerm_network_interface" "utility" {
     name                          = "example-configuration-${var.environment}"
     subnet_id                     = azurerm_subnet.db.id
     private_ip_address_allocation = "Dynamic"
+  }
+
+  tags = {
+    application = "example"
+    cost_center = var.cost_center
+    environment = var.environment
   }
 }
 
@@ -92,6 +105,7 @@ resource "azurerm_linux_virtual_machine" "utility" {
 
   tags = {
     application = "example"
+    cost_center = var.cost_center
     environment = var.environment
     os_type     = "linux"
   }
@@ -133,6 +147,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "web" {
 
   tags = {
     application = "example"
+    cost_center = var.cost_center
     environment = var.environment
     os_type     = "linux"
   }
@@ -150,6 +165,12 @@ resource "azurerm_network_profile" "static" {
       name      = "static-configuration"
       subnet_id = azurerm_subnet.container.id
     }
+  }
+
+  tags = {
+    application = "example"
+    cost_center = var.cost_center
+    environment = var.environment
   }
 }
 
@@ -175,6 +196,7 @@ resource "azurerm_container_group" "static" {
 
   tags = {
     application = "example"
+    cost_center = var.cost_center
     environment = var.environment
     os_type     = "linux"
   }
