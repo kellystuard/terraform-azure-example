@@ -14,6 +14,10 @@ locals {
           name   = "Example Development"
           branch = null
         }
+        tst = {
+          name   = "Example Test"
+          branch = "test"
+        }
       }
     }
   }
