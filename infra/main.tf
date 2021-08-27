@@ -20,6 +20,19 @@ locals {
         }
       }
     }
+    matercross2 = {
+      cost_center = "58497" # default cost center for all environments
+      environments = {
+        dev = {
+          name   = "Example Development"
+          branch = null
+        }
+        tst = {
+          name   = "Example Test"
+          branch = "test"
+        }
+      }
+    }
   }
 
   application_defaults = {
