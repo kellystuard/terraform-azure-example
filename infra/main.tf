@@ -7,28 +7,28 @@
 
 locals {
   applications = {
-    example = {
+    example1 = {
       cost_center = "88149" # default cost center for all environments
       environments = {
         dev = {
-          name   = "Example Development"
+          name   = "Example 1 Development"
           branch = null
         }
         tst = {
-          name   = "Example Test"
+          name   = "Example 1 Test"
           branch = "test"
         }
       }
     }
-    matercross2 = {
+    example2 = {
       cost_center = "58497" # default cost center for all environments
       environments = {
         dev = {
-          name   = "Example Development"
+          name   = "Example 1 Development"
           branch = null
         }
         tst = {
-          name   = "Example Test"
+          name   = "Example 1 Test"
           branch = "test"
         }
       }
