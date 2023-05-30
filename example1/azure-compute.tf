@@ -72,7 +72,7 @@ resource "azurerm_linux_virtual_machine" "utility" {
   location              = data.azurerm_resource_group.main.location
   resource_group_name   = data.azurerm_resource_group.main.name
   network_interface_ids = [azurerm_network_interface.utility.id]
-  size                  = "Standard_A1"
+  size                  = "Standard_B1ls"
 
   admin_username                  = "example"
   admin_password                  = random_password.password.result
@@ -97,7 +97,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "web" {
   name                = "web-vm"
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
-  sku                 = "Standard_A1"
+  sku                 = "Standard_B1ls"
   instances           = 3
 
   admin_username                  = "example"
