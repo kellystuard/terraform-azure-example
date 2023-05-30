@@ -12,11 +12,9 @@ locals {
       environments = {
         dev = {
           name   = "Example 1 Development"
-          branch = null
         }
         tst = {
           name   = "Example 1 Test"
-          branch = "test"
         }
       }
     }
@@ -24,35 +22,41 @@ locals {
       cost_center = "58497" # default cost center for all environments
       environments = {
         dev = {
-          name   = "Example 1 Development"
-          branch = null
+          name   = "Example 2 Development"
         }
         tst = {
-          name   = "Example 1 Test"
-          branch = "test"
+          name   = "Example 2 Special Test" #special cost center for special test environment
+          branch = "test-special"
+          cost_center = "90000"
         }
       }
     }
   }
 
   application_defaults = {
-    terraform_version = "1.0.1"
+    terraform_version = "1.4.6"
+    azure_location = "North Central US"
     environments = {
-      dev = null
-      tst = "test"
-      prd = "prod"
+      dev = {
+        branch = null
+      }
+      tst = {
+        branch = "test"
+      }
+      prd = {
+        branch = "prod"
+      }
     }
   }
 
   application_environments = { for ae in flatten([
     for appk, appv in local.applications : [
-      for envk, envv in appv.environments : merge(envv, {
-        id = envk
-        application = merge(appv, {
-          id           = appk
-          environments = null # an environment should not have visibility to other environments
-        })
+      # application-environment > application > application-environment defaults > application defaults
+      for envk, envv in appv.environments : merge(local.application_defaults, local.application_defaults.environments[envk], appv, envv, {
+        app = appk
+        env = envk
+        environments = null # an environment should not have visibility to the other environments of its app
       })
     ]
-  ]) : "${ae.application.id}-${ae.id}" => ae }
+  ]) : "${ae.app}-${ae.env}" => ae }
 }

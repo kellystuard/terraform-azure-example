@@ -15,8 +15,8 @@ resource "random_password" "password" {
 
 resource "azurerm_network_interface" "db" {
   name                = "db-nic"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
 
   ip_configuration {
     name                          = "web-configuration"
@@ -24,17 +24,13 @@ resource "azurerm_network_interface" "db" {
     private_ip_address_allocation = "Dynamic"
   }
 
-  tags = {
-    application = "example"
-    cost_center = var.cost_center
-    environment = var.environment
-  }
+  tags = local.tags
 }
 
 resource "azurerm_linux_virtual_machine" "db" {
   name                  = "db-vm"
-  location              = azurerm_resource_group.main.location
-  resource_group_name   = azurerm_resource_group.main.name
+  location              = data.azurerm_resource_group.main.location
+  resource_group_name   = data.azurerm_resource_group.main.name
   network_interface_ids = [azurerm_network_interface.db.id]
   size                  = "Standard_A2"
 
@@ -54,18 +50,13 @@ resource "azurerm_linux_virtual_machine" "db" {
     storage_account_type = "Standard_LRS"
   }
 
-  tags = {
-    application = "example"
-    cost_center = var.cost_center
-    environment = var.environment
-    os_type     = "linux"
-  }
+  tags = local.tags
 }
 
 resource "azurerm_network_interface" "utility" {
   name                = "utility-nic"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
 
   ip_configuration {
     name                          = "utility-configuration"
@@ -73,17 +64,13 @@ resource "azurerm_network_interface" "utility" {
     private_ip_address_allocation = "Dynamic"
   }
 
-  tags = {
-    application = "example"
-    cost_center = var.cost_center
-    environment = var.environment
-  }
+  tags = local.tags
 }
 
 resource "azurerm_linux_virtual_machine" "utility" {
   name                  = "utility-vm"
-  location              = azurerm_resource_group.main.location
-  resource_group_name   = azurerm_resource_group.main.name
+  location              = data.azurerm_resource_group.main.location
+  resource_group_name   = data.azurerm_resource_group.main.name
   network_interface_ids = [azurerm_network_interface.utility.id]
   size                  = "Standard_A1"
 
@@ -103,18 +90,13 @@ resource "azurerm_linux_virtual_machine" "utility" {
     storage_account_type = "Standard_LRS"
   }
 
-  tags = {
-    application = "example"
-    cost_center = var.cost_center
-    environment = var.environment
-    os_type     = "linux"
-  }
+  tags = local.tags
 }
 
 resource "azurerm_linux_virtual_machine_scale_set" "web" {
   name                = "web-vm"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
   sku                 = "Standard_A1"
   instances           = 3
 
@@ -145,18 +127,13 @@ resource "azurerm_linux_virtual_machine_scale_set" "web" {
     }
   }
 
-  tags = {
-    application = "example"
-    cost_center = var.cost_center
-    environment = var.environment
-    os_type     = "linux"
-  }
+  tags = local.tags
 }
 
 resource "azurerm_network_profile" "static" {
   name                = "static-profile"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
 
   container_network_interface {
     name = "static-nic"
@@ -167,17 +144,13 @@ resource "azurerm_network_profile" "static" {
     }
   }
 
-  tags = {
-    application = "example"
-    cost_center = var.cost_center
-    environment = var.environment
-  }
+  tags = local.tags
 }
 
 resource "azurerm_container_group" "static" {
   name                = "static-containers"
-  resource_group_name = azurerm_resource_group.main.name
-  location            = azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
   os_type             = "Linux"
   ip_address_type     = "Private"
   network_profile_id  = azurerm_network_profile.static.id
@@ -194,10 +167,5 @@ resource "azurerm_container_group" "static" {
     }
   }
 
-  tags = {
-    application = "example"
-    cost_center = var.cost_center
-    environment = var.environment
-    os_type     = "linux"
-  }
+  tags = local.tags
 }

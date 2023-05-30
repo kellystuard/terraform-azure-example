@@ -1,35 +1,27 @@
 resource "azurerm_virtual_network" "main" {
   name                = "main-network"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
   address_space       = ["10.0.0.0/16"]
 
-  tags = {
-    application = "example"
-    cost_center = var.cost_center
-    environment = var.environment
-  }
+  tags = local.tags
 }
 resource "azurerm_lb" "test" {
   name                = "web-load-balancer"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
 
-  tags = {
-    application = "example"
-    cost_center = var.cost_center
-    environment = var.environment
-  }
+  tags = local.tags
 }
 resource "azurerm_subnet" "web" {
   name                 = "web-subnet"
-  resource_group_name  = azurerm_resource_group.main.name
+  resource_group_name  = data.azurerm_resource_group.main.name
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = ["10.0.1.0/24"]
 }
 resource "azurerm_subnet" "container" {
   name                 = "container-subnet"
-  resource_group_name  = azurerm_resource_group.main.name
+  resource_group_name  = data.azurerm_resource_group.main.name
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = ["10.0.2.0/24"]
 
@@ -48,14 +40,14 @@ resource "azurerm_subnet" "container" {
 }
 resource "azurerm_subnet" "db" {
   name                 = "db-subnet"
-  resource_group_name  = azurerm_resource_group.main.name
+  resource_group_name  = data.azurerm_resource_group.main.name
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = ["10.0.3.0/24"]
 }
 resource "azurerm_network_security_group" "no_rdp" {
   name                = "no-rdp-security-group"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
 
   security_rule {
     name                       = "testRDP"
@@ -69,11 +61,7 @@ resource "azurerm_network_security_group" "no_rdp" {
     destination_address_prefix = "*"
   }
 
-  tags = {
-    application = "example"
-    cost_center = var.cost_center
-    environment = var.environment
-  }
+  tags = local.tags
 }
 resource "azurerm_subnet_network_security_group_association" "web-no-rdp" {
   subnet_id                 = azurerm_subnet.web.id

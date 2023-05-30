@@ -10,22 +10,21 @@ data "tfe_oauth_client" "kellystuard" {
 resource "tfe_workspace" "applications" {
   for_each = local.application_environments
 
-  name              = "terraform-azure-${each.key}"
+  name              = "terraform-azure-example-${each.key}"
   description       = each.value.name
   organization      = "kellystuard"
   auto_apply        = true
   execution_mode    = "remote"
   queue_all_runs    = true
-  terraform_version = try(each.value.application.terraform_version, local.application_defaults.terraform_version)
-  # application's version > default version
-
+  terraform_version = each.value.terraform_version
+  
   # for this example, each application is a directory, instead of a separate source control repository
-  working_directory = each.value.application.id
+  # for a full implementation, set the source control endpoint and use `vcs_repo.identifier`
+  working_directory = each.value.app
   vcs_repo {
     identifier     = "kellystuard/terraform-azure-example"
-    branch         = try(each.value.branch, local.application_defaults.environments[each.value.id], null)
+    branch         = each.value.branch
     oauth_token_id = sensitive(data.tfe_oauth_client.kellystuard.oauth_token_id)
-    # environment's branch > default branch by known name > source control's configured default branch (typically `main`)
   }
 }
 
@@ -33,21 +32,21 @@ resource "tfe_variable" "environment" {
   for_each = local.application_environments
 
   key          = "environment"
-  value        = each.value.id
+  value        = each.value.env
   category     = "terraform"
-  description  = "Environment Name"
+  description  = "Environment Short Name"
   workspace_id = tfe_workspace.applications[each.key].id
 }
 
-resource "tfe_variable" "cost_center" {
+resource "tfe_variable" "azure_resource_group" {
   for_each = local.application_environments
 
-  key          = "cost_center"
-  value        = try(each.value.cost_center, each.value.application.cost_center)
+  key          = "azure_resource_group"
+  #todo: set from azure resource, to establish dependency
+  value        = azurerm_resource_group.applications[each.key].name
   category     = "terraform"
-  description  = "Cost Center for Billing"
+  description  = "Azure Resource Group"
   workspace_id = tfe_workspace.applications[each.key].id
-  # application's cost center > environment's cost center
 }
 
 resource "tfe_variable" "ARM_SUBSCRIPTION_ID" {
