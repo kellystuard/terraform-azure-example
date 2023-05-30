@@ -32,7 +32,7 @@ resource "azurerm_linux_virtual_machine" "db" {
   location              = data.azurerm_resource_group.main.location
   resource_group_name   = data.azurerm_resource_group.main.name
   network_interface_ids = [azurerm_network_interface.db.id]
-  size                  = "Standard_A2"
+  size                  = "Standard_B1ls"
 
   admin_username                  = "example"
   admin_password                  = random_password.password.result
@@ -124,46 +124,6 @@ resource "azurerm_linux_virtual_machine_scale_set" "web" {
       name      = "internal"
       primary   = true
       subnet_id = azurerm_subnet.web.id
-    }
-  }
-
-  tags = local.tags
-}
-
-resource "azurerm_network_profile" "static" {
-  name                = "static-profile"
-  location            = data.azurerm_resource_group.main.location
-  resource_group_name = data.azurerm_resource_group.main.name
-
-  container_network_interface {
-    name = "static-nic"
-
-    ip_configuration {
-      name      = "static-configuration"
-      subnet_id = azurerm_subnet.container.id
-    }
-  }
-
-  tags = local.tags
-}
-
-resource "azurerm_container_group" "static" {
-  name                = "static-containers"
-  resource_group_name = data.azurerm_resource_group.main.name
-  location            = data.azurerm_resource_group.main.location
-  os_type             = "Linux"
-  ip_address_type     = "Private"
-  network_profile_id  = azurerm_network_profile.static.id
-
-  container {
-    name   = "hello-world"
-    image  = "microsoft/aci-helloworld:latest"
-    cpu    = "0.5"
-    memory = "0.5"
-
-    ports {
-      port     = 443
-      protocol = "TCP"
     }
   }
 
