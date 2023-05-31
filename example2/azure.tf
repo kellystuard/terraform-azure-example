@@ -26,8 +26,8 @@ resource "azurerm_container_app" "example" {
   template {
     container {
       name  = "examplecontainerapp"
-      image = "docker.io/chrch/docker-pets:1.0"
-      #image  = "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest"
+      #image = "docker.io/chrch/docker-pets:1.0"
+      image  = "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest"
       cpu    = 0.25
       memory = "0.5Gi"
     }
@@ -36,7 +36,7 @@ resource "azurerm_container_app" "example" {
   ingress {
     external_enabled           = true
     allow_insecure_connections = true
-    target_port                = 5000
+    target_port                = 80
     traffic_weight {
       percentage = 100
     }
