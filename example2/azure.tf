@@ -32,5 +32,13 @@ resource "azurerm_container_app" "example" {
     }
   }
 
+  ingress {
+    external_enabled = true
+    target_port      = 80
+    traffic_weight {
+      percentage = 100
+    }
+  }
+
   tags = local.tags
 }
