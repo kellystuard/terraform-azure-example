@@ -34,7 +34,7 @@ resource "azurerm_container_app" "example" {
   }
 
   registry {
-    server = docker.io
+    server = "docker.io"
   }
 
   ingress {
