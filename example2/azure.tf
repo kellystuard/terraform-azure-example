@@ -10,8 +10,8 @@ resource "azurerm_log_analytics_workspace" "example" {
 
 resource "azurerm_container_group" "example" {
   name                        = "container-${var.environment}"
-  location                    = azurerm_resource_group.main.location
-  resource_group_name         = azurerm_resource_group.main.name
+  location                    = data.azurerm_resource_group.main.location
+  resource_group_name         = data.azurerm_resource_group.main.name
   ip_address_type             = "Public"
   dns_name_label              = "example-${var.environment}"
   os_type                     = "Linux"
