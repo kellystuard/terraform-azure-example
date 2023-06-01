@@ -8,37 +8,32 @@ resource "azurerm_log_analytics_workspace" "example" {
   tags = local.tags
 }
 
-resource "azurerm_container_app_environment" "example" {
-  name                       = "example-environment-${var.environment}"
-  location                   = data.azurerm_resource_group.main.location
-  resource_group_name        = data.azurerm_resource_group.main.name
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.example.id
+resource "azurerm_container_group" "example" {
+  name                        = "container-${var.environment}"
+  location                    = azurerm_resource_group.main.location
+  resource_group_name         = azurerm_resource_group.main.name
+  ip_address_type             = "Public"
+  dns_name_label              = "example-${var.environment}"
+  os_type                     = "Linux"
+  dns_name_label_reuse_policy = "ResourceGroupReuse"
+  restart_policy              = "OnFailure"
 
-  tags = local.tags
-}
+  container {
+    name   = "hello-world"
+    image  = "mcr.microsoft.com/azuredocs/aci-helloworld:latest"
+    cpu    = "0.5"
+    memory = "1.5"
 
-resource "azurerm_container_app" "example" {
-  name                         = "example-app-${var.environment}"
-  container_app_environment_id = azurerm_container_app_environment.example.id
-  resource_group_name          = data.azurerm_resource_group.main.name
-  revision_mode                = "Single"
-
-  template {
-    container {
-      name  = "examplecontainerapp"
-      image = "docker.io/chrch/docker-pets:1.0"
-      #image  = "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest"
-      cpu    = 0.25
-      memory = "0.5Gi"
+    ports {
+      port     = 443
+      protocol = "TCP"
     }
   }
 
-  ingress {
-    external_enabled           = true
-    allow_insecure_connections = true
-    target_port                = 5000
-    traffic_weight {
-      percentage = 100
+  diagnostics {
+    log_analytics {
+      workspace_id  = azurerm_log_analytics_workspace.example.id
+      workspace_key = azurerm_log_analytics_workspace.example.workspace_id
     }
   }
 
