@@ -32,7 +32,7 @@ resource "azurerm_container_group" "example" {
 
   diagnostics {
     log_analytics {
-      workspace_id  = azurerm_log_analytics_workspace.example.id
+      workspace_id  = azurerm_log_analytics_workspace.example.name
       workspace_key = azurerm_log_analytics_workspace.example.workspace_id
     }
   }
