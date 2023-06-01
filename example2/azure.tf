@@ -30,6 +30,11 @@ resource "azurerm_container_group" "example" {
     }
   }
 
+  exposed_port {
+    port     = 443
+    protocol = "TCP"
+  }
+
   diagnostics {
     log_analytics {
       workspace_id  = azurerm_log_analytics_workspace.example.workspace_id
