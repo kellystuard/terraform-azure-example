@@ -13,7 +13,7 @@ resource "tfe_workspace" "applications" {
   name              = "terraform-azure-example-${each.key}"
   description       = each.value.name
   organization      = "kellystuard"
-  auto_apply        = true
+  auto_apply        = false
   execution_mode    = "remote"
   queue_all_runs    = true
   terraform_version = each.value.terraform_version
