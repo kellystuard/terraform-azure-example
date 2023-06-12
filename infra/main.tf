@@ -18,9 +18,6 @@ locals {
         dev = {
           name   = "Example 1 Development"
         }
-        tst = {
-          name   = "Example 1 Test"
-        }
       }
     }
   }
