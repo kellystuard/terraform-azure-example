@@ -98,7 +98,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "web" {
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   sku                 = "Standard_B1ls"
-  instances           = 6
+  instances           = 3
 
   admin_username                  = "example"
   admin_password                  = random_password.password.result
