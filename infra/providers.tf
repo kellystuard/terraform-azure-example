@@ -14,14 +14,9 @@ terraform {
 }
 
 provider "tfe" {
-  token = var.tfe_token
 }
 
 provider "azurerm" {
-  subscription_id = var.arm_subscription_id
-  tenant_id       = var.arm_tenant_id
-  client_id       = var.arm_client_id
-  client_secret   = var.arm_client_secret
-
+  skip_provider_registration = true
   features {}
 }
