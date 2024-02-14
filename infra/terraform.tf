@@ -14,7 +14,6 @@ resource "tfe_workspace" "applications" {
   description       = each.value.name
   organization      = "kellystuard"
   auto_apply        = false
-  execution_mode    = "remote"
   queue_all_runs    = true
   terraform_version = each.value.terraform_version
   
