@@ -50,7 +50,8 @@ resource "tfe_variable" "azure_resource_group" {
 
 resource "tfe_workspace_run" "application_run" {
   for_each = local.application_environments
-  workspace_id    = tfe_workspace.applications.id
+
+  workspace_id    = tfe_workspace.applications[each.key].id
   depends_on      = [tfe_variable.environment, tfe_variable.azure_resource_group]
 
   apply {
