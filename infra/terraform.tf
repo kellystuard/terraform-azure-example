@@ -14,7 +14,7 @@ resource "tfe_workspace" "applications" {
   description       = each.value.name
   organization      = "kellystuard"
   auto_apply        = false
-  queue_all_runs    = true
+  queue_all_runs    = false
   terraform_version = each.value.terraform_version
   
   # for this example, each application is a directory, instead of a separate source control repository
@@ -46,4 +46,21 @@ resource "tfe_variable" "azure_resource_group" {
   category     = "terraform"
   description  = "Azure Resource Group"
   workspace_id = tfe_workspace.applications[each.key].id
+}
+
+resource "tfe_workspace_run" "application_run" {
+  for_each = local.application_environments
+
+  workspace_id    = tfe_workspace.applications[each.key].id
+  depends_on      = [tfe_variable.environment, tfe_variable.azure_resource_group]
+
+  apply {
+    manual_confirm = false
+    wait_for_run   = false
+  }
+
+  destroy {
+    manual_confirm = false
+    wait_for_run   = true
+  }
 }
