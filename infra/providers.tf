@@ -14,9 +14,9 @@ terraform {
 }
 
 provider "tfe" {
-  skip_provider_registration = true
 }
 
 provider "azurerm" {
+  skip_provider_registration = true
   features {}
 }
